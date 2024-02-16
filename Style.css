@@ -1,0 +1,161 @@
+@font-face {
+  font-family: "Jet";
+  src: url(Fonts/JetBrainsMono-Medium.ttf);
+}
+
+@keyframes open {
+  0% {
+    transform: scale(1) translateY(0);
+  }
+  50% {
+    transform: scale(0.9) translateY(5px);
+  }
+  100% {
+    transform: scale(1) translateY(0);
+  }
+}
+
+.animate {
+  animation: open 0.2s ease-out forwards;
+}
+
+body {
+  background-image: url(Images/208106.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  font-family: Jet;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 160%;
+  background: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 1),
+    rgba(20, 32, 43, 0.9),
+    rgba(20, 32, 43, 0.7)
+  );
+}
+
+.card {
+  background: linear-gradient(
+    135deg,
+    rgba(171, 255, 234, 1) 0%,
+    rgba(115, 64, 251, 1) 100%
+  );
+  margin: 100px auto 0;
+  padding: 20px;
+  border-radius: 20px;
+  color: white;
+  width: 80%;
+  text-align: center;
+  max-width: 500px;
+
+  overflow: hidden;
+  max-height: 100px;
+  transition: max-height 2s ease-out;
+}
+
+.card.open {
+  max-height: 1300px;
+}
+
+.search {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.search input {
+  border-radius: 30px;
+  color: #00001f;
+  background-color: whitesmoke;
+  border-width: 0;
+  padding: 10px 25px;
+  font-size: 18px;
+  flex: 1;
+  height: 45px;
+  margin-right: 16px;
+}
+
+.search button {
+  border-radius: 50%;
+  color: #00001f;
+  background-color: whitesmoke;
+  border-width: 0;
+  width: 60px;
+  height: 60px;
+  cursor: pointer;
+}
+
+.search button img {
+  width: 40px;
+}
+
+.weather-icon {
+  margin-top: 15px;
+  width: 170px;
+}
+
+.status {
+  margin-bottom: 5px;
+  margin-top: 10px;
+}
+
+.weather h1 {
+  font-size: 75px;
+}
+
+.weather h2 {
+  font-size: 40px;
+  font-weight: 500;
+  margin-top: -30px;
+}
+
+.details {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 20px;
+  margin-top: 50px;
+}
+
+.col {
+  display: flex;
+  align-items: center;
+  text-align: left;
+}
+
+.col img {
+  width: 60px;
+  margin-right: 10px;
+}
+
+.humidity,
+.wind {
+  font-size: 30px;
+  margin-top: -6px;
+}
+
+.weather {
+  display: none;
+}
+
+.radar {
+  margin-top: 15px;
+  display: none;
+  border-top: 4px solid white;
+}
+
+.radar iframe {
+  margin-top: 10px;
+  height: 400px;
+  width: 400px;
+  border-radius: 20px;
+  border: none;
+}

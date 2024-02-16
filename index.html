@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="Style.css" />
+    <title>Weather</title>
+  </head>
+  <body>
+    <div class="overlay">
+      <div class="card">
+        <div class="search">
+          <input
+            type="text"
+            placeholder="Enter name"
+            spellcheck="false"
+            required
+          />
+          <button><img src="Images/Search.png" /></button>
+        </div>
+
+        <div class="weather">
+          <h1 class="status"></h1>
+          <img
+            src="Images/cloud-drizzle-regular-120.png"
+            class="weather-icon"
+          />
+          <h1 class="temp">0°C</h1>
+          <h2 class="city">ENTER A NAME</h2>
+          <div class="details">
+            <div class="col">
+              <img src="Images/menu-regular-120.png" />
+              <div>
+                <div class="humidity">0%</div>
+                <div>Humidity</div>
+              </div>
+            </div>
+            <div class="col">
+              <img src="Images/wind-regular-120.png" />
+              <div>
+                <div class="wind">0 km/h</div>
+                <div>Wind Speed</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="radar">
+          <h1>Check Out Live Weather Radar</h1>
+          <iframe
+            src="https://www.rainviewer.com/map.html?loc=36.1734,10.5469,3&oFa=0&oC=0&oU=0&oCS=1&oF=0&oAP=1&c=1&o=88&lm=1&layer=radar&sm=1&sn=1&hu=0"
+            allowfullscreen
+          ></iframe>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const apiKey = "513a571468dce9fd66f6df3965ea4716";
+      const apiUrl =
+        "https://api.openweathermap.org/data/2.5/weather?&units=metric&q=";
+
+      const searchBox = document.querySelector(".search input");
+      const searchBtn = document.querySelector(".search button");
+      const weatherIcon = document.querySelector(".weather-icon");
+      const card = document.querySelector(".card");
+
+      isOpened = true;
+
+      async function checkWeather(city) {
+        Response = await fetch(apiUrl + city + `&appid=${apiKey}`);
+        let data = await Response.json();
+
+        console.log(data);
+
+        document.querySelector(".city").innerHTML = data.name;
+        document.querySelector(".temp").innerHTML =
+          Math.round(data.main.temp) + "°C";
+        document.querySelector(".humidity").innerHTML =
+          data.main.humidity + "%";
+        document.querySelector(".wind").innerHTML = data.wind.speed + " km/h";
+
+        if (data.weather[0].main == "Clouds") {
+          weatherIcon.src = "Images/cloud-regular-120.png";
+          document.body.style.backgroundImage = "url('Images/clouds.jpg')";
+          document.querySelector(".status").innerH;
+
+          TML = "Cloudy";
+        } else if (data.weather[0].main == "Clear") {
+          weatherIcon.src = "Images/sun-regular-120.png";
+          document.querySelector(".status").innerHTML = "Clear";
+        } else if (data.weather[0].main == "Rain") {
+          weatherIcon.src = "Images/cloud-rain-regular-120.png";
+          document.querySelector(".status").innerHTML = "Raining";
+        } else if (data.weather[0].main == "Drizzle") {
+          weatherIcon.src = "Images/cloud-drizzle-regular-120.png";
+          document.querySelector(".status").innerHTML = "Drizzeling";
+        } else if (data.weather[0].main == "Mist") {
+          weatherIcon.src = "Images/water-regular-120.png";
+          document.querySelector(".status").innerHTML = "Misty";
+        }
+
+        document.querySelector(".weather").style.display = "block";
+        document.querySelector(".radar").style.display = "block";
+      }
+
+      function triggerAnimation() {
+        const element = document.querySelector(".search button");
+        element.classList.remove("animate");
+        void element.offsetWidth; // Trigger a reflow (important)
+        element.classList.add("animate");
+      }
+
+      searchBtn.addEventListener("click", () => {
+        if (isOpened === true) {
+          card.classList.toggle("open");
+        }
+
+        isOpened = false;
+        checkWeather(searchBox.value);
+        triggerAnimation();
+
+        console.log(searchBox.value);
+      });
+    </script>
+  </body>
+</html>
